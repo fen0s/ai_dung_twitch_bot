@@ -5,12 +5,13 @@ import json
 
 
 class Browser():
-    def __init__(self, email, password):
-        self.driver = webdriver.Firefox(executable_path=r'geckodriver.exe')
+    def __init__(self):
+        self.driver = webdriver.Firefox(executable_path=r'C:\Users\User\Desktop\bot_github\geckodriver.exe')
         self.driver.get("https://play.aidungeon.io/")
-		settings = json.load("settings.json")
-		self.email = settings["email"]
-		self.password = setttings["password"]
+        with open("settings.json") as data:
+            user_data = json.load(data)
+        self.email = user_data["email"]
+        self.password = user_data["password"]
         self.sign_in()
 
     def sign_in(self):
