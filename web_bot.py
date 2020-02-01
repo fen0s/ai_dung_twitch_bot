@@ -6,7 +6,7 @@ import json
 
 class Browser():
     def __init__(self):
-        self.driver = webdriver.Firefox(executable_path=r'C:\Users\User\Desktop\bot_github\geckodriver.exe')
+        self.driver = webdriver.Firefox(executable_path=r'geckodriver.exe')
         self.driver.get("https://play.aidungeon.io/")
         with open("settings.json") as data:
             user_data = json.load(data)
