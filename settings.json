@@ -1,0 +1,8 @@
+{
+"email": "your email on ai dungeon",
+"password": "your password on ai dungeon",
+"oauth": "your twitch oauth link",
+"client_id": "your twitch app client id",
+"channel": "your twitch channel name",
+"cooldown": 20;
+}
