@@ -36,7 +36,7 @@ class Bot(commands.Bot):
     @commands.command(name='p')
     async def get_prompt(self, ctx):
         if ctx.author.name not in self.authors:
-            self.prompts.append(ctx.message.content.lstrip("!p "))
+            self.prompts.append(ctx.message.content[3:])
             self.authors.append(ctx.author.name)
             await ctx.send(f'Prompt accepted!')
         else:
