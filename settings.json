@@ -4,5 +4,5 @@
 "oauth": "your twitch oauth link",
 "client_id": "your twitch app client id",
 "channel": "your twitch channel name",
-"cooldown": 20;
+"cooldown": 20
 }
