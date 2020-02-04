@@ -62,8 +62,8 @@ class Bot(commands.Bot):
         await asyncio.sleep(300)
 
     @commands.command(name='y')
-    '''Used for voting. Doesn't work if vote isn't initiated.'''
     async def vote_yes(self, ctx):
+        '''Used for voting. Doesn't work if vote isn't initiated.'''
         if ctx.author.name not in self.voters and self.is_voting:
             self.votes['y'] += 1
             self.voters.append(ctx.author.name)
