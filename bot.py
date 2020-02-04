@@ -18,11 +18,14 @@ class Bot(commands.Bot):
         self.cooldown= self.data["cooldown"]
         self.votes= {'y': 0,
                  'n': 0}
+        #create the looping task so it acts every N seconds
         self.loop.create_task(self.clear_list())
 
     async def clear_list(self):
+        '''Acts every N seconds (defined in settings.json), by clearing the list and, with it, sending the prompt to the browser.'''
         while True:
-            await asyncio.sleep(self.cooldown)
+            #using the randint for more randomizing.
+            await asyncio.sleep(self.cooldown + random.randint(0, 0.999))
             if self.prompts:
                 prompt= random.choice(self.prompts)
                 self.browser.send_prompt(prompt)
@@ -35,6 +38,7 @@ class Bot(commands.Bot):
 
     @commands.command(name='p')
     async def get_prompt(self, ctx):
+        '''Fetches the prompt from the chat, if the author didn't sent a prompt already.'''
         if ctx.author.name not in self.authors:
             self.prompts.append(ctx.message.content[3:])
             self.authors.append(ctx.author.name)
@@ -44,6 +48,7 @@ class Bot(commands.Bot):
 
     @commands.command(name='reset')
     async def start_voting(self, ctx):
+        '''Used to initiate the voting for reset.'''
         self.is_voting= True
         await self.send_message("Starting a vote for reset! Say !y to vote for reset, and !n to vote against! Voting goes for 2 minutes!")
         await asyncio.sleep(120)
@@ -57,6 +62,7 @@ class Bot(commands.Bot):
         await asyncio.sleep(300)
 
     @commands.command(name='y')
+    '''Used for voting. Doesn't work if vote isn't initiated.'''
     async def vote_yes(self, ctx):
         if ctx.author.name not in self.voters and self.is_voting:
             self.votes['y'] += 1
@@ -66,10 +72,12 @@ class Bot(commands.Bot):
             pass
    
     async def send_message(self, message):
+        '''A shortcut for sending the message in the chat. Added for readability.'''
         await self.get_channel(name=self.data["channel"]).send(message)
 
     @commands.command(name='n')
     async def vote_no(self, ctx):
+        '''Used for voting. Doesn't work if vote isn't initiated.'''
         if ctx.author.name not in self.voters and self.is_voting:
             self.votes['n'] += 1
             self.voters.append(ctx.author.name)
